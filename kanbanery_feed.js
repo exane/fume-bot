@@ -15,7 +15,7 @@ const onlyNewFeed = (feed = []) => {
 
     if (in_cache) return false
     return f
-  }).filter(f => f)
+  }).filter(f => f && f.date === new Date().toDateString())
 }
 
 const fetch = async (url) => {

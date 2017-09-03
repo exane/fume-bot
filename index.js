@@ -22,7 +22,11 @@ const run = async () => {
 
   setInterval(async () => {
     console.log("fetching...")
-    send(await kanbanery.fetch(URL))
+    try {
+      send(await kanbanery.fetch(URL))
+    } catch (e) {
+      console.error("Fetching failed. Reason: ", e)
+    }
   }, FETCH_INTERVAL)
 }
 
@@ -45,7 +49,7 @@ client.on("ready", () => {
 
 client.on("message", async (msg) => {
   emotes.feelsGoodMan = emotes.feelsGoodMan || client.emojis.find("name", "feelsGoodMan").toString()
-  emotes.feelsBadMan = client.emojis.find("name", "feelsBadMan").toString()
+  emotes.feelsBadMan = emotes.feelsBadMan || client.emojis.find("name", "feelsBadMan").toString()
 
   if (msg.channel.name !== DISCORD_CHANNEL || msg.author.bot === true) return
   const content = msg.content
