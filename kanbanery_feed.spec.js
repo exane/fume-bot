@@ -2,18 +2,25 @@ const { expect } = require("chai")
 const request = require("request-promise-native")
 const kanbanery = require("./kanbanery_feed")
 const sinon = require("sinon")
+const fs = require("fs")
 
-const replayer = require("replayer")
-replayer.substitute("<HOST>", () => { return process.env.KANBANERY_HOST })
-replayer.substitute("<KANBANERY_API_KEY>", () => { return process.env.KANBANERY_API_KEY })
-
-const URL = `${process.env.KANBANERY_BOARD_URL}?key=${process.env.KANBANERY_API_KEY}`
-const URL_WITH_NO_ACTIVITIES_TODAY = URL + "&1"
-const URL_WITH_ACTIVITIES = URL + "&2"
+const URL_WITH_NO_ACTIVITIES = "URL_WITH_NO_ACTIVITIES"
+const URL_WITH_ACTIVITIES = "URL_WITH_ACTIVITIES"
 
 describe("kanbanery_feed", () => {
 
   describe("#fetch", () => {
+    let request_get_stub
+
+    before(() => {
+      request_get_stub = sinon.stub(request, "get")
+      request_get_stub.withArgs(URL_WITH_ACTIVITIES).returns(fs.readFileSync("./fixtures/kanbanery/new_activity"))
+      request_get_stub.withArgs(URL_WITH_NO_ACTIVITIES).returns(fs.readFileSync("./fixtures/kanbanery/no_new_activity"))
+    })
+
+    after(() => {
+      request_get_stub.restore()
+    })
 
     beforeEach(() => {
       kanbanery.store.cache = []
@@ -29,11 +36,9 @@ describe("kanbanery_feed", () => {
     })
 
     it("fetches kanbanery feed", async () => {
-      sinon.spy(request, "get")
-
       await kanbanery.fetch(URL_WITH_ACTIVITIES)
 
-      expect(request.get.called).to.be.true
+      expect(request_get_stub.called).to.be.true
     })
 
     it("fetches only feeds from today", async () => {
@@ -42,7 +47,7 @@ describe("kanbanery_feed", () => {
     })
 
     it("should ignore entries from previous dates", async () => {
-      const result = await kanbanery.fetch(URL_WITH_NO_ACTIVITIES_TODAY)
+      const result = await kanbanery.fetch(URL_WITH_NO_ACTIVITIES)
       expect(result).to.have.length(0)
     })
 

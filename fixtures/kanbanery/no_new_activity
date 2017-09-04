@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="content">
+      <div class="wrapper project-log box">
+
+        <h2>
+          Project log
+
+        </h2>
+
+        <dl id="project-history">
+          <dt>Project history for <a href="#">2017-09-02</a></dt>
+          <dd class="loaded">
+          <ul>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; has been moved</h5>
+                <p>Tim Meier has moved coding &quot;VM next patch&quot; to column &quot;To Do&quot;</p>
+                <span class="time">
+                  15:12
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575995">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; has been moved</h5>
+                <p>Tim Meier has moved coding &quot;VM next patch&quot; to column &quot;Doing&quot;</p>
+                <span class="time">
+                  15:10
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575994">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; is not ready</h5>
+                <p>Tim Meier has marked coding &quot;VM next patch&quot; as not ready to pull</p>
+                <span class="time">
+                  15:07
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575993">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; is ready!</h5>
+                <p>Tim Meier has marked coding &quot;VM next patch&quot; as ready to pull from column &quot;To Do&quot;</p>
+                <span class="time">
+                  15:07
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575992">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; has been moved</h5>
+                <p>Tim Meier has moved coding &quot;VM next patch&quot; to column &quot;To Do&quot;</p>
+                <span class="time">
+                  14:36
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575982">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; has been moved</h5>
+                <p>Tim Meier has moved coding &quot;VM next patch&quot; to column &quot;Doing&quot;</p>
+                <span class="time">
+                  14:35
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575981">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; is ready!</h5>
+                <p>Tim Meier has marked coding &quot;VM next patch&quot; as ready to pull from column &quot;To Do&quot;</p>
+                <span class="time">
+                  14:34
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575980">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; has been moved</h5>
+                <p>Tim Meier has moved coding &quot;VM next patch&quot; to column &quot;To Do&quot;</p>
+                <span class="time">
+                  14:17
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575971">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; has been moved</h5>
+                <p>Tim Meier has moved coding &quot;VM next patch&quot; to column &quot;Doing&quot;</p>
+                <span class="time">
+                  14:16
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575970">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; is not ready</h5>
+                <p>Tim Meier has marked coding &quot;VM next patch&quot; as not ready to pull</p>
+                <span class="time">
+                  14:16
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575969">2216115</a>
+                </span>
+              </span>
+            </li>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; is not ready</h5>
+                <p>Tim Meier has marked coding &quot;VM next patch&quot; as not ready to pull</p>
+                <span class="time">
+                  14:03
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16575968">2216115</a>
+                </span>
+              </span>
+            </li>
+          </ul>
+          </dd>
+
+          <dt>Project history for <a href="/projects/74023/log?date=2017-09-01">2017-09-01</a></dt>
+          <dd style="display: none"></dd>
+          <dt>Project history for <a href="/projects/74023/log?date=2017-08-31">2017-08-31</a></dt>
+          <dd style="display: none"></dd>
+          <dt>Project history for <a href="/projects/74023/log?date=2017-08-28">2017-08-28</a></dt>
+          <dd style="display: none"></dd>
+          <dt>Project history for <a href="/projects/74023/log?date=2017-08-27">2017-08-27</a></dt>
+          <dd style="display: none"></dd>
+          <dt>Project history for <a href="/projects/74023/log?date=2017-08-26">2017-08-26</a></dt>
+          <dd style="display: none"></dd>
+        </dl>
+
+        <p>
+        <a href="/projects/74023/log?all=1">Show all</a>
+        </p>
+      </div>
+
+    </div>
+
+
+
+  </body>
+</html>

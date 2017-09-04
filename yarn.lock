@@ -321,6 +321,10 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
+html-entities@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
+
 htmlparser2@^3.9.1:
   version "3.9.2"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
@@ -405,10 +409,6 @@ jsprim@^1.2.2:
 just-extend@^1.1.22:
   version "1.1.22"
   resolved "https://registry.yarnpkg.com/just-extend/-/just-extend-1.1.22.tgz#3330af756cab6a542700c64b2e4e4aa062d52fff"
-
-levenshtein@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/levenshtein/-/levenshtein-1.0.2.tgz#cd02e8b32075645ddcf5d059e02efa918f9fb3ec"
 
 lodash._baseassign@^3.0.0:
   version "3.2.0"
@@ -603,12 +603,6 @@ readable-stream@^2.0.2:
     safe-buffer "~5.1.1"
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
-
-replayer@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/replayer/-/replayer-2.1.3.tgz#488f61f9f51d7dc9908922c50297d247bca87deb"
-  dependencies:
-    levenshtein "1.0.2"
 
 request-promise-core@1.1.1:
   version "1.1.1"

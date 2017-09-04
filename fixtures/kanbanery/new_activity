@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="content">
+      <div class="wrapper project-log box">
+
+        <h2>
+          Project log
+
+        </h2>
+
+        <dl id="project-history">
+          <dt>Project history for <a href="#">2017-09-04</a></dt>
+          <dd class="loaded">
+          <ul>
+            <li class="clearfix">
+              <span class="avatar" width="50">
+                <img alt="014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3a%2f%2fkanbanery-production-assets.s3.amazonaws.com%2ffiles%2fuser_avatars%2f65851%2favatar_fc096e" src="https://secure.gravatar.com/avatar/014e1cfd7d18c1b4ecc18bae7f27859f?d=https%3A%2F%2Fkanbanery-production-assets.s3.amazonaws.com%2Ffiles%2Fuser_avatars%2F65851%2Favatar_fc096e.png" />
+              </span>
+              <span class="text">
+                <h5>&quot;VM next patch&quot; has been moved</h5>
+                <p>Tim Meier has moved coding &quot;VM next patch&quot; to column &quot;Doing&quot;</p>
+                <span class="time">
+                  12:15
+                  - Task ID: <a href="https://<HOST>/projects/74023/log/16577997">2216115</a>
+                </span>
+              </span>
+            </li>
+          </ul>
+
+          </dd>
+
+          <dt>Project history for <a href="/projects/74023/log?date=2017-09-02">2017-09-02</a></dt>
+          <dd style="display: none"></dd>
+          <dt>Project history for <a href="/projects/74023/log?date=2017-09-01">2017-09-01</a></dt>
+          <dd style="display: none"></dd>
+          <dt>Project history for <a href="/projects/74023/log?date=2017-08-31">2017-08-31</a></dt>
+          <dd style="display: none"></dd>
+        </dl>
+
+        <p>
+        <a href="/projects/74023/log?all=1">Show all</a>
+        </p>
+      </div>
+
+    </div>
+  </body>
+</html>
