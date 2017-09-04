@@ -1,30 +1,48 @@
 const request = require("request-promise-native")
 const cheerio = require("cheerio")
+const moment = require("moment")
 
-let _cache = []
+const store = {
+  cache: []
+}
+
 const cache = (feed = []) => {
-  _cache = [..._cache, ...feed]
+  store.cache = [...store.cache, ...feed]
 
   // clear cache from previous days
-  _cache = _cache.filter(c => c.date === new Date().toDateString())
+  store.cache = store.cache.filter(c => c.date === date())
+}
+
+const date = (d) => {
+  return moment(d).format("DD-MM-YYYY")
 }
 
 const onlyNewFeed = (feed = []) => {
   return feed.map(f => {
-    const in_cache = _cache.some(c => c.title === f.title && c.time === f.time && c.description === f.description)
+    const in_cache = store.cache.some(c => c.title === f.title && c.time === f.time && c.description === f.description)
 
     if (in_cache) return false
     return f
-  }).filter(f => f && f.date === new Date().toDateString())
+  }).filter(f => f && f.date === date())
 }
 
 const fetch = async (url) => {
-  const req = await request(url)
+  const req = await request.get(url)
   const $ = cheerio.load(req)
   const feed = $("#project-history > dd.loaded")
+  const feed_date = $("#project-history dt:first-child a").text()
   const json_feed = onlyNewFeed(feed2json($, feed))
-  console.log("New feed: ")
-  console.log(json_feed)
+
+  if (date() !== date(feed_date)) {
+    // No need to parse old entries
+    return []
+  }
+
+  if (process.env.NODE_ENV !== "test") {
+    console.log("New feed: ")
+    console.log(json_feed)
+  }
+
   cache(json_feed)
 
   return json_feed
@@ -40,11 +58,12 @@ const feed2json = ($, html) => {
       description: $(e).find(".text p").text(),
       task: $(e).find(".text .time a").attr("href"),
       time: $(e).find(".text .time").text(),
-      date: new Date().toDateString()
+      date: date()
     }
   }).get()
 }
 
 module.exports = {
-  fetch
+  fetch,
+  store
 }

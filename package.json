@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "NODE_ENV=test mocha ./**/*.spec.js",
     "start": "node index.js"
   },
   "author": "Tim Meier <raco0n@gmx.de>",
@@ -11,7 +12,14 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.1.0",
+    "moment": "^2.18.1",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.0",
+    "replayer": "^2.1.3",
+    "sinon": "^3.2.1"
   }
 }
