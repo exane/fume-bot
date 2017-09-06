@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha ./**/*.spec.js",
+    "pm2": "pm2",
+    "deploy:setup": "pm2 deploy ecosystem.config.js production setup",
+    "deploy": "pm2 deploy ecosystem.config.js production",
     "start": "node index.js"
   },
   "author": "Tim Meier <raco0n@gmx.de>",
@@ -20,6 +23,8 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^3.5.0",
-    "sinon": "^3.2.1"
+    "pm2": "^2.6.1",
+    "sinon": "^3.2.1",
+    "timekeeper": "^2.0.0"
   }
 }
