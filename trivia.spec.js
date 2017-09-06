@@ -27,7 +27,7 @@ const discord_interface = {
   }
 }
 
-const trigger_message_callback = (msg) => trivia.helper.on.getCall(0).args[2](msg)
+const trigger_message_callback = (msg) => trivia.helper.on.getCall(0).args[1](msg)
 
 describe("trivia", () => {
 
@@ -76,8 +76,13 @@ describe("trivia", () => {
 
       expect(trivia.helper.send.calledOnce).to.be.true
 
-      const sent_message = trivia.helper.send.getCall(0).args[2]
-      expect(sent_message).to.be.eq(opentdb_api_fixture_json.results[0].question)
+      const sent_message = trivia.helper.send.getCall(0).args[1]
+      const { question, correct_answer, incorrect_answers } = opentdb_api_fixture_json.results[0]
+
+      const answers = [...incorrect_answers, correct_answer]
+
+      const expected_question = `${question}\n- ${answers.join("\n- ")}`
+      expect(sent_message).to.be.eq(expected_question)
     })
 
     it("awaits an answer after sending a question", async () => {
@@ -85,7 +90,7 @@ describe("trivia", () => {
 
       expect(trivia.helper.on.calledOnce).to.be.true
 
-      const eventname = trivia.helper.on.getCall(0).args[1]
+      const eventname = trivia.helper.on.getCall(0).args[0]
       expect(eventname).to.eq("message")
     })
 
@@ -112,7 +117,7 @@ describe("trivia", () => {
       const channel = "test-channel"
       await trivia.start(discord_interface.client, channel)
 
-      expect(trivia.helper.send.getCall(0).args[1]).to.be.eq(channel)
+      expect(trivia.helper.send.getCall(0).args[0]).to.be.eq(channel)
     })
 
     it("should ignore bot messages", async () => {
@@ -143,12 +148,28 @@ describe("trivia", () => {
       await trivia.start(discord_interface.client, "test", 200)
       expect(trivia.store.current_question.running).to.be.true
 
-      trigger_message_callback(Object.assign(discord_interface.message, { content: expected_answer }))
+      await trigger_message_callback(Object.assign(discord_interface.message, { content: expected_answer }))
 
       expect(trivia.store.current_question.running).to.be.false
     })
 
-    it("should send message if current question is over")
+    it("should send message if current question time limit is over", async () => {
+      await trivia.start(discord_interface.client, "test-channel")
+
+      expect(trivia.store.current_question.solved).to.be.false
+      expect(trivia.store.current_question.running).to.be.true
+      expect(trivia.helper.send.calledOnce).to.be.true
+
+      clearTimeout(trivia.store.current_question.timeout)
+      trivia.store.current_question._next_question_cb()
+
+      expect(trivia.store.current_question.solved).to.be.false
+      expect(trivia.store.current_question.running).to.be.false
+      expect(trivia.helper.send.calledTwice).to.be.true
+
+      expect(trivia.helper.send.getCall(1).args[0]).to.be.eq("test-channel")
+      expect(trivia.helper.send.getCall(1).args[1]).to.be.eq("Time's up!")
+    })
 
     it("compares case-insensitive", async () => {
       const expected_answer = "Central Processing Unit"
