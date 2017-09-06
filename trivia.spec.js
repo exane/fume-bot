@@ -9,9 +9,11 @@ const opentdb_api_fixture_json = JSON.parse(opentdb_api_fixture)
 
 const discord_interface = {
   client: {
-    on: () => {},
+    on() {},
     channels: {
-      find: () => {}
+      find() {
+        return { send() { return new Promise(res => res())} }
+      }
     }
   },
   message: {
@@ -20,30 +22,32 @@ const discord_interface = {
       bot: false
     },
     channel: {
-      send: () => {}
+      send() { return new Promise(res => res()) }
     }
   }
 }
 
+const trigger_message_callback = (msg) => trivia.helper.on.getCall(0).args[2](msg)
+
 describe("trivia", () => {
 
   describe("#start", () => {
-    let request_get_stub
+    let request_get_stub, send_stub, on_stub, message_send_stub
 
     beforeEach(() => {
       request_get_stub = sinon.stub(request, "get")
       request_get_stub.withArgs("https://opentdb.com/api.php?amount=1&category=18").returns(opentdb_api_fixture)
 
-      sinon.spy(discord_interface.client, "on")
-      sinon.stub(discord_interface.client.channels, "find").returns(sinon.stub({ send: () => {} }))
-      sinon.spy(discord_interface.message.channel, "send")
+      send_stub = sinon.spy(trivia.helper, "send")
+      on_stub = sinon.spy(trivia.helper, "on")
+      message_send_stub = sinon.spy(trivia.helper, "message_send")
     })
 
     afterEach(() => {
       request_get_stub.restore()
-      discord_interface.client.on.restore()
-      discord_interface.client.channels.find.restore()
-      discord_interface.message.channel.send.restore()
+      send_stub.restore()
+      on_stub.restore()
+      message_send_stub.restore()
     })
 
     it("is a function", () => {
@@ -70,24 +74,27 @@ describe("trivia", () => {
     it("sends the question to discord channel", async () => {
       await trivia.start(discord_interface.client)
 
-      expect(discord_interface.client.channels.find().send.calledOnce).to.be.true
-      expect(discord_interface.client.channels.find().send.args[0][0]).to.be.eq(opentdb_api_fixture_json.results[0].question)
+      expect(trivia.helper.send.calledOnce).to.be.true
+
+      const sent_message = trivia.helper.send.getCall(0).args[2]
+      expect(sent_message).to.be.eq(opentdb_api_fixture_json.results[0].question)
     })
 
     it("awaits an answer after sending a question", async () => {
       await trivia.start(discord_interface.client)
 
-      expect(discord_interface.client.on.calledOnce).to.be.true
-      expect(discord_interface.client.on.args[0][0]).to.eq("message")
+      expect(trivia.helper.on.calledOnce).to.be.true
+
+      const eventname = trivia.helper.on.getCall(0).args[1]
+      expect(eventname).to.eq("message")
     })
 
     it("evaluates the answer to incorrect", async () => {
       await trivia.start(discord_interface.client)
 
-      // trigger "message" callback
-      discord_interface.client.on.args[0][1](Object.assign(discord_interface.message, { content: "wrong answer" }))
+      trigger_message_callback(Object.assign(discord_interface.message, { content: "wrong answer" }))
 
-      expect(discord_interface.message.channel.send.called).to.be.false
+      expect(trivia.helper.message_send.called).to.be.false
     })
 
     it("evaluates the answer to correct", async () => {
@@ -95,17 +102,17 @@ describe("trivia", () => {
 
       await trivia.start(discord_interface.client)
 
-      // trigger "message" callback
-      discord_interface.client.on.args[0][1](Object.assign(discord_interface.message, { content: expected_answer }))
+      trigger_message_callback(Object.assign(discord_interface.message, { content: expected_answer }))
 
-      expect(discord_interface.message.channel.send.args[0][0]).to.be.eq("correct answer")
+      expect(trivia.helper.message_send.getCall(0).args[0]).to.be.deep.equal(discord_interface.message)
+      expect(trivia.helper.message_send.getCall(0).args[1]).to.be.eq("correct answer")
     })
 
     it("should use a specified channel", async () => {
       const channel = "test-channel"
       await trivia.start(discord_interface.client, channel)
 
-      expect(discord_interface.client.channels.find.args[0]).to.have.members(["name", channel])
+      expect(trivia.helper.send.getCall(0).args[1]).to.be.eq(channel)
     })
 
     it("should ignore bot messages", async () => {
@@ -115,10 +122,9 @@ describe("trivia", () => {
 
       msg.author.bot = true
 
-      // trigger "message" callback
-      discord_interface.client.on.args[0][1](msg)
+      trigger_message_callback(msg)
 
-      expect(discord_interface.message.channel.send.called).to.be.false
+      expect(trivia.helper.message_send.called).to.be.false
     })
 
     it("should deny any answers", async () => {
@@ -126,10 +132,9 @@ describe("trivia", () => {
 
       trivia.store.current_question.running = false
 
-      // trigger "message" callback
-      discord_interface.client.on.args[0][1](discord_interface.message)
+      trigger_message_callback(discord_interface.message)
 
-      expect(discord_interface.message.channel.send.called).to.be.false
+      expect(trivia.helper.message_send.called).to.be.false
     })
 
     it("should set running to false if question is correct", async () => {
@@ -138,8 +143,7 @@ describe("trivia", () => {
       await trivia.start(discord_interface.client, "test", 200)
       expect(trivia.store.current_question.running).to.be.true
 
-      // trigger "message" callback
-      discord_interface.client.on.args[0][1](Object.assign(discord_interface.message, { content: expected_answer }))
+      trigger_message_callback(Object.assign(discord_interface.message, { content: expected_answer }))
 
       expect(trivia.store.current_question.running).to.be.false
     })
@@ -153,10 +157,9 @@ describe("trivia", () => {
 
       trivia.store.current_question.correct_answer = expected_answer
 
-      // trigger "message" callback
-      discord_interface.client.on.args[0][1](Object.assign(discord_interface.message, { content: expected_answer.toLowerCase() }))
+      trigger_message_callback(Object.assign(discord_interface.message, { content: expected_answer.toLowerCase() }))
 
-      expect(discord_interface.message.channel.send.args[0][0]).to.be.eq("correct answer")
+      expect(trivia.helper.message_send.getCall(0).args[1]).to.be.eq("correct answer")
     })
   })
 

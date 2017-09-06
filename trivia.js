@@ -14,17 +14,29 @@ const store = {
   current_question: {}
 }
 
+const helper = {
+  async send(discord_client, channel_name, msg) {
+    return discord_client.channels.find("name", channel_name).send(msg)
+  },
+  on(discord_client, event, cb) {
+    return discord_client.on(event, cb)
+  },
+  async message_send(discord_message, msg) {
+    return discord_message.channel.send(msg)
+  }
+}
+
 const start = async (discord_client, channel, time_limit, min_wait_time, max_wait_time) => {
   if (discord_client === undefined) throw Error("Missing argument discord_client")
 
-  discord_client.on("message", (msg) => {
+  helper.on(discord_client, "message", (msg) => {
     if (msg.author.bot) return
     if (!store.current_question.running) {
       return
     }
 
     if (msg.content.toLowerCase() === store.current_question.correct_answer.toLowerCase()) {
-      msg.channel.send("correct answer")
+      helper.message_send(msg, "correct answer")
       clearTimeout(store.current_question.timeout)
       nextQuestion(discord_client, channel, time_limit, min_wait_time, max_wait_time)
     }
@@ -65,7 +77,7 @@ const ask = async (discord_client, channel, time_limit, min_wait_time, max_wait_
     console.log("Expected answer: %s", store.current_question.correct_answer)
   }
 
-  discord_client.channels.find("name", channel).send(results[0].question)
+  helper.send(discord_client, channel, results[0].question)
 }
 
 const randomInterval = (min, max) => {
@@ -76,5 +88,6 @@ const randomInterval = (min, max) => {
 
 module.exports = {
   start,
+  helper,
   store
 }
