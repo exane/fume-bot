@@ -66,7 +66,7 @@ const nextQuestion = async () => {
     await helper.send(params.channel, "Time's up!")
 
     if (process.env.NODE_ENV !== "test") {
-      console.log("current question time's up! Waiting for next question in %s minutes", next_question_in_seconds / 60)
+      console.log("current question time's up!")
     }
   }
 
@@ -74,6 +74,8 @@ const nextQuestion = async () => {
 }
 
 const waitForNextQuestion = (next_question_in_seconds) => {
+  console.log("Waiting for next question in %s minutes", next_question_in_seconds / 60)
+
   setTimeout(() => {
     ask()
   }, next_question_in_seconds * 1000)
