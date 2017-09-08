@@ -29,7 +29,9 @@ const run = async (discord_client) => {
   await kanbanery.fetch(URL)
 
   try {
-    trivia.start(discord_client, DISCORD_TRIVIA_CHANNEL, TRIVIA_TIME_LIMIT * 1000, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX)
+    if (DISCORD_TRIVIA_CHANNEL) {
+      trivia.start(discord_client, DISCORD_TRIVIA_CHANNEL, TRIVIA_TIME_LIMIT * 1000, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX)
+    }
   } catch (e) {
     console.error("Trivia start failed. Reason: ", e)
   }
