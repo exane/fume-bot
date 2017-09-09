@@ -74,7 +74,9 @@ const nextQuestion = async () => {
 }
 
 const waitForNextQuestion = (next_question_in_seconds) => {
-  console.log("Waiting for next question in %s minutes", next_question_in_seconds / 60)
+  if (process.env.NODE_ENV !== "test") {
+    console.log("Waiting for next question in %s minutes", next_question_in_seconds / 60)
+  }
 
   setTimeout(() => {
     ask()
