@@ -2,6 +2,9 @@ const kanbanery = require("./kanbanery_feed")
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const trivia = require("./trivia")
+//TODO refactor with DiscordWrapper
+const DiscordWrapper = require("./DiscordWrapper")
+const Holiday = require("./Holiday")
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN
 const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
@@ -56,6 +59,20 @@ const send = (feeds) => {
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
+  const discord = new DiscordWrapper(client)
+  const holiday = new Holiday("SL")
+
+  discord.listenTo(/^bot, .*holidays.*/, async (msg) => {
+    if (msg.channel.name !== DISCORD_TRIVIA_CHANNEL) return
+    if (msg.author.bot) return
+    const range_number = msg.content.match(/holidays.*\d+/)
+    const unit = msg.content.match(/holidays.*(days|weeks)/)
+    const upcoming = await holiday.next(2, "weeks")
+
+    this.send(DISCORD_TRIVIA_CHANNEL, `Holiday reminder: \nFor the next ${range_number} ${unit} we've got:\n- ` + upcoming.map(h => {
+      return `${h.datum}: ${h.name}` + h.hinweis ? ` (${h.hinweis})` : ""
+    }).join("\n- "))
+  })
 
   try {
     run(client)
