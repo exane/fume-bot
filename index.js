@@ -3,8 +3,8 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const trivia = require("./trivia")
 //TODO refactor with DiscordWrapper
-const DiscordWrapper = require("./DiscordWrapper")
-const Holiday = require("./Holiday")
+const DiscordWrapper = require("./discord")
+const Holiday = require("./holidays")
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN
 const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
@@ -32,7 +32,8 @@ const run = async (discord_client) => {
   await kanbanery.fetch(URL)
 
   try {
-    if (DISCORD_TRIVIA_CHANNEL) {
+    // temp disabled
+    if (false && DISCORD_TRIVIA_CHANNEL) {
       trivia.start(discord_client, DISCORD_TRIVIA_CHANNEL, TRIVIA_TIME_LIMIT * 1000, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX)
     }
   } catch (e) {
@@ -65,13 +66,19 @@ client.on("ready", () => {
   discord.listenTo(/^bot, .*holidays.*/, async (msg) => {
     if (msg.channel.name !== DISCORD_TRIVIA_CHANNEL) return
     if (msg.author.bot) return
-    const range_number = msg.content.match(/holidays.*\d+/)
-    const unit = msg.content.match(/holidays.*(days|weeks)/)
-    const upcoming = await holiday.next(2, "weeks")
+    const range_number = msg.content.match(/holidays.*(\d+)/)[1]
+    const unit = msg.content.match(/holidays.*(days?|weeks?|months?)/)[1]
+    const upcoming = await holiday.next(range_number, unit)
+    console.log(range_number)
+    console.log(unit)
+    console.log(upcoming)
 
-    this.send(DISCORD_TRIVIA_CHANNEL, `Holiday reminder: \nFor the next ${range_number} ${unit} we've got:\n- ` + upcoming.map(h => {
-      return `${h.datum}: ${h.name}` + h.hinweis ? ` (${h.hinweis})` : ""
-    }).join("\n- "))
+    const upcoming_message = upcoming.map(h => {
+      return `${h.datum}: ${h.name}` + (h.hinweis != "" ? ` (${h.hinweis})` : "")
+    }).join("\n- ")
+    const message = `Holiday reminder: \nFor the next ${range_number} ${unit} we've got:\n- ` + (upcoming.length ? upcoming_message : "Nothing :(")
+
+    discord.send(DISCORD_TRIVIA_CHANNEL, message)
   })
 
   try {

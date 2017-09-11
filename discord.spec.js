@@ -88,11 +88,11 @@ describe("DiscordWrapper", () => {
       expect(client.on.callCount).to.eq(0)
 
       let test_called = false
-      discord.listenTo("test", () => test_called = true)
+      discord.listenTo("test", (msg) => test_called = msg.content)
       expect(client.on.calledOnce).to.be.true
 
       let test2_called = false
-      discord.listenTo("test2", () => test2_called = true)
+      discord.listenTo("test2", (msg) => test2_called = msg.content)
       expect(client.on.calledOnce).to.be.true
 
       expect(client.on.getCall(0).args).to.include.members(["message"])
@@ -104,17 +104,17 @@ describe("DiscordWrapper", () => {
       message_interface.content = "test"
       triggerOnMessageReceive(message_interface)
 
-      expect(test_called).to.be.true
+      expect(test_called).to.eq("test")
       expect(test2_called).to.be.false
 
       message_interface.content = "test2"
       triggerOnMessageReceive(message_interface)
-      expect(test2_called).to.be.true
+      expect(test2_called).to.eq("test2")
     })
 
     it("uses regex pattern to compare messages", () => {
       let test_called = false
-      discord.listenTo(/^bot, .*holidays/, () => test_called = true)
+      discord.listenTo(/^bot, .*holidays/, (msg) => test_called = msg.content)
 
       const [,triggerOnMessageReceive] = client.on.getCall(0).args
 
@@ -128,12 +128,12 @@ describe("DiscordWrapper", () => {
 
       message_interface.content = "bot, holidays"
       triggerOnMessageReceive(message_interface)
-      expect(test_called).to.be.true
+      expect(test_called).to.eq("bot, holidays")
       test_called = false
 
       message_interface.content = "bot, when are the next holidays?"
       triggerOnMessageReceive(message_interface)
-      expect(test_called).to.be.true
+      expect(test_called).to.eq("bot, when are the next holidays?")
       test_called = false
     })
 

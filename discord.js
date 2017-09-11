@@ -11,7 +11,7 @@ module.exports = class DiscordWrapper {
     if (!this._listening) {
       this.client.on("message", (msg) => {
         this._message_map.forEach((map) => {
-          msg.content.match(map.message) ? map.callback() : ""
+          msg.content.match(map.message) ? map.callback(msg) : ""
         })
       })
       this._listening = true
