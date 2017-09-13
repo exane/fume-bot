@@ -25,8 +25,8 @@ module.exports = {
       host : "192.168.1.109",
       ref  : "origin/master",
       repo : "https://github.com/exane/fume-bot.git",
-      path : "/home/pi/fume-bot-production",
-      "post-deploy" : "source /home/pi/fume-bot-production/shared/env && yarn --prod; pm2 delete ecosystem.config.js --env production; pm2 start ecosystem.config.js --env production"
+      path : "/home/pi/fume-bot",
+      "post-deploy" : "source /home/pi/fume-bot/shared/env && yarn --prod; pm2 delete ecosystem.config.js --env production; pm2 start ecosystem.config.js --env production"
     }
   }
 }
