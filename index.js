@@ -49,7 +49,8 @@ const run = async (discord_client) => {
 
 const send = (feeds) => {
   feeds.forEach(feed => {
-    const msg = `:triangular_flag_on_post: **${feed.title}**\n${feed.description}\n:point_right: ${feed.task}\n---------------------------------------------------------------------------`
+    // using "<" and ">" around a link to disabled embedding
+    const msg = `:triangular_flag_on_post: **${feed.title}**\n${feed.description}\n:point_right: <${feed.task}>\n---------------------------------------------------------------------------`
     client.channels.find("name", DISCORD_FLOX_CHANNEL).send(msg)
   })
 }
