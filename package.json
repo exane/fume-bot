@@ -6,10 +6,8 @@
   "scripts": {
     "test": "NODE_ENV=test mocha ./**/*.spec.js",
     "pm2": "pm2",
-    "deploy:prod:setup": "pm2 deploy ecosystem.config.js production setup",
-    "deploy:prod": "pm2 deploy ecosystem.config.js production",
-    "deploy:staging:setup": "pm2 deploy ecosystem.config.js staging setup",
-    "deploy:staging": "pm2 deploy ecosystem.config.js staging",
+    "deploy:setup": "pm2 deploy ecosystem.config.js production setup",
+    "deploy": "pm2 deploy ecosystem.config.js production",
     "start": "node index.js"
   },
   "author": "Tim Meier <raco0n@gmx.de>",
