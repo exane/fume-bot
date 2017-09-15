@@ -68,7 +68,7 @@ const summary = async (host, column_id, api_token) => {
   if (!column_id) throw Error("missing column_id and api_token param")
   if (!api_token) throw Error("missing api_token param")
 
-  const tasks = await request.get(`https://${host}/api/v1/columns/${column_id}/tasks.json?api_token=${api_token}`)
+  const tasks = JSON.parse(await request.get(`https://${host}/api/v1/columns/${column_id}/tasks.json?api_token=${api_token}`))
 
   const target_date = moment().subtract(1, "month").format("MMMM/YYYY")
   return `Summary for ${target_date}\nTickets done: ${tasks.length}\n - ` + (tasks.map(t => t.title).join("\n - "))

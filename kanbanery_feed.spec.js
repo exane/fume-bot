@@ -71,7 +71,7 @@ describe("kanbanery_feed", () => {
 
     beforeEach(() => {
       tk.travel(new Date("2017-09-04"))
-      sandbox.stub(request, "get").returns(new Promise(res => res(kanbanery_column_tasks_json)))
+      sandbox.stub(request, "get").returns(new Promise(res => res(kanbanery_column_tasks)))
     })
 
     afterEach(() => {

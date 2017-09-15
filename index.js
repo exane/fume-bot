@@ -2,6 +2,7 @@ const kanbanery = require("./kanbanery_feed")
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const trivia = require("./trivia")
+const job = require("cron").CronJob
 //TODO refactor with DiscordWrapper
 const DiscordWrapper = require("./discord")
 const Holiday = require("./holidays")
@@ -12,8 +13,7 @@ const DISCORD_TRIVIA_CHANNEL = process.env.DISCORD_TRIVIA_CHANNEL
 
 const { TRIVIA_TIME_LIMIT, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX } = process.env
 
-const KANBANERY_API_KEY = process.env.KANBANERY_API_KEY
-const KANBANERY_BOARD_URL = process.env.KANBANERY_BOARD_URL
+const { KANBANERY_API_KEY, KANBANERY_HOST, KANBANERY_BOARD_URL, KANBANERY_SUMMARY_COLUMN_ID } = process.env
 const FETCH_INTERVAL = (process.env.FETCH_INTERVAL || 5 * 60) * 1000 // default 5 minutes
 
 const URL = `${KANBANERY_BOARD_URL}/log/?key=${KANBANERY_API_KEY}`
@@ -81,6 +81,13 @@ client.on("ready", () => {
 
     discord.send(DISCORD_TRIVIA_CHANNEL, message)
   })
+
+  new job("00 00 00 01 * *", async () => {
+    console.log("CronJob triggered: printing kanbanery summary")
+    const summary = await kanbanery.summary(KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, KANBANERY_API_KEY)
+    console.log(summary)
+    discord.send(DISCORD_FLOX_CHANNEL, summary)
+  }).start()
 
   try {
     run(client)
