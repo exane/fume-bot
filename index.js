@@ -64,29 +64,41 @@ client.on("ready", () => {
   const discord = new DiscordWrapper(client)
   const holiday = new Holiday("SL")
 
-  discord.listenTo(/^bot, .*holidays.*/, async (msg) => {
-    if (msg.channel.name !== DISCORD_TRIVIA_CHANNEL) return
-    if (msg.author.bot) return
-    const range_number = msg.content.match(/holidays.*(\d+)/)[1]
-    const unit = msg.content.match(/holidays.*(days?|weeks?|months?)/)[1]
-    const upcoming = await holiday.next(range_number, unit)
-    console.log(range_number)
+  const notifyHolidays = async (range = 2, unit = "weeks") => {
+    const upcoming = await holiday.next(range, unit)
+    console.log(range)
     console.log(unit)
     console.log(upcoming)
 
     const upcoming_message = upcoming.map(h => {
       return `${h.datum}: ${h.name}` + (h.hinweis != "" ? ` (${h.hinweis})` : "")
     }).join("\n- ")
-    const message = `Holiday reminder: \nFor the next ${range_number} ${unit} we've got:\n- ` + (upcoming.length ? upcoming_message : "Nothing :(")
+    const message = `Holiday reminder: \nFor the next ${range} ${unit} we've got:\n- ` + (upcoming.length ? upcoming_message : "Nothing :(")
 
     discord.send(DISCORD_TRIVIA_CHANNEL, message)
+  }
+
+  discord.listenTo(/^bot, .*holidays.*/, async (msg) => {
+    if (msg.channel.name !== DISCORD_TRIVIA_CHANNEL) return
+    if (msg.author.bot) return
+    const range = msg.content.match(/holidays.*(\d+)/)[1]
+    const unit = msg.content.match(/holidays.*(days?|weeks?|months?)/)[1]
+
+    notifyHolidays(range, unit)
   })
 
+  // Triggers on the first of every month
   new job("00 00 00 01 * *", async () => {
     console.log("CronJob triggered: printing kanbanery summary")
     const summary = await kanbanery.summary(KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, KANBANERY_API_KEY)
     console.log(summary)
     discord.send(DISCORD_FLOX_CHANNEL, summary)
+  }).start()
+
+  // Triggers on every monday
+  new job("00 00 00 * * 0", async () => {
+    console.log("CronJob triggered: printing upcoming holidays for the next 2 weeks")
+    notifyHolidays(2, "weeks")
   }).start()
 
   try {
