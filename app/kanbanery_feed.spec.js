@@ -3,7 +3,6 @@ const request = require("request-promise-native")
 const kanbanery = require("./kanbanery_feed")
 const sinon = require("sinon")
 const fs = require("fs")
-const moment = require("moment")
 const tk = require("timekeeper")
 
 const URL_WITH_NO_ACTIVITIES = "URL_WITH_NO_ACTIVITIES"
