@@ -1,4 +1,5 @@
 const cron = require("cron")
+const moment = require("moment")
 
 const send_kanbanery_feed = (discord, channel, feeds) => {
   feeds.forEach(feed => {
@@ -25,8 +26,10 @@ module.exports = (discord, kanbanery, holiday) => {
     }
 
     const upcoming_messages = upcoming.map(h => {
-      return `- ${h.datum}: ${h.name}` + (h.hinweis != "" ? ` (${h.hinweis})` : "")
+      const date_formatted = moment(h.datum).format("DD.MM.YYYY (dddd)")
+      return `- ${date_formatted}: ${h.name}` + (h.hinweis != "" ? ` (${h.hinweis})` : "")
     }).join("\n")
+
     const message = upcoming.length ?
       `Holiday reminder: \nFor the next ${range} ${unit} we've got:\n${upcoming_messages}` :
       `Holiday reminder: \nFor the next ${range} ${unit} we've no upcoming holidays.`

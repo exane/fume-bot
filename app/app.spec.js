@@ -68,7 +68,7 @@ describe("App", () => {
     expect(discord.send.calledOnce).to.be.true
     expect(discord.send.getCall(0).args).to.include.members([
       "trivia",
-      "Holiday reminder: \nFor the next 2 weeks we've got:\n- 2017-10-03: Tag der Deutschen Einheit (hinweis)"
+      "Holiday reminder: \nFor the next 2 weeks we've got:\n- 03.10.2017 (Tuesday): Tag der Deutschen Einheit (hinweis)"
     ])
   })
 
