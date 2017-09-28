@@ -94,7 +94,7 @@ module.exports = (discord, kanbanery, holiday) => {
         console.log("fetching...")
       }
       try {
-        send_kanbanery_feed(discord, DISCORD_TRIVIA_CHANNEL, await kanbanery.fetch(URL))
+        send_kanbanery_feed(discord, DISCORD_FLOX_CHANNEL, await kanbanery.fetch(URL))
       } catch (e) {
         console.error("Fetching failed. Reason: ", e)
       }
