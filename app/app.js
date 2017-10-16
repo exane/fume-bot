@@ -34,13 +34,15 @@ module.exports = (discord, kanbanery, holiday) => {
       `Holiday reminder: \nFor the next ${range} ${unit} we've got:\n${upcoming_messages}` :
       `Holiday reminder: \nFor the next ${range} ${unit} we've no upcoming holidays.`
 
-    if (!upcoming.length && send_only_if_holidays_are_upcoming) return
+    if (!upcoming.length && send_only_if_holidays_are_upcoming) return false
     discord.send(DISCORD_TRIVIA_CHANNEL, message)
   }
 
   discord.listenTo(/^bot, .*holidays.*/, async (msg) => {
-    if (msg.channel.name !== DISCORD_TRIVIA_CHANNEL) return
-    if (msg.author.bot) return
+    if (msg.channel.name !== DISCORD_TRIVIA_CHANNEL) return false
+
+    if (msg.author.bot) return false
+
     let range, unit
 
     // keep variables undefined if try fails. let notifyHolidays use its default params
