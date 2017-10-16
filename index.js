@@ -9,6 +9,7 @@ const app = require("./app/app")
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN
 const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
 const DISCORD_TRIVIA_CHANNEL = process.env.DISCORD_TRIVIA_CHANNEL
+const DISCORD_FUME_CHANNEL = process.env.DISCORD_FUME_CHANNEL
 
 // const { TRIVIA_TIME_LIMIT, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX } = process.env
 
@@ -37,6 +38,10 @@ client.on("message", async (msg) => {
   emotes.feelsGoodMan = emotes.feelsGoodMan || client.emojis.find("name", "feelsGoodMan").toString()
   emotes.feelsBadMan = emotes.feelsBadMan || client.emojis.find("name", "feelsBadMan").toString()
 
+  if (msg.channel.name === DISCORD_FUME_CHANNEL) {
+    onFumeMessage(msg)
+  }
+
   if (msg.channel.name !== DISCORD_FLOX_CHANNEL || msg.author.bot === true) return
   const content = msg.content
   console.log("Command recognized: %s", content)
@@ -57,5 +62,25 @@ client.on("message", async (msg) => {
     msg.channel.send(content.replace(/^say/, ""))
   }
 })
+
+const onFumeMessage = (msg) => {
+  if (msg.author.bot === false) {
+    sassyComment(msg.channel)
+  }
+}
+
+const sassyComment = (channel) => {
+  const emotes = [
+    "feelsGoodMan", "feelsBadMan", "timCreep", "NotLikeThis",
+    "feelsWtfMan", "LUL", "timW00t", "thinking"
+  ]
+
+  //should bot being sassy?
+  const being_sassy = (Math.random()*100 | 0) === 42
+  if (being_sassy) {
+    const random_emote = emotes[(Math.random() * emotes.length) | 0]
+    channel.send(client.emojis.find("name", random_emote).toString())
+  }
+}
 
 client.login(DISCORD_TOKEN)
