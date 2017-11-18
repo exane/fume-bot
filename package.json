@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha ./**/*.spec.js",
-    "pm2": "pm2",
-    "deploy:setup": "pm2 deploy ecosystem.config.js production setup",
-    "deploy": "pm2 deploy ecosystem.config.js production",
+    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha ./**/*.spec.js",
+    "pm2": "./node_modules/pm2/bin/pm2",
+    "deploy:setup": "yarn run pm2 deploy ecosystem.config.js production setup",
+    "deploy": "yarn run pm2 deploy ecosystem.config.js production",
     "start": "node index.js"
   },
   "author": "Tim Meier <raco0n@gmx.de>",
