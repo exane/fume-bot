@@ -38,7 +38,7 @@ module.exports = (discord, kanbanery, holiday) => {
     discord.send(DISCORD_TRIVIA_CHANNEL, message)
   }
 
-  discord.listenTo(/^bot, .*holidays.*/, async (msg) => {
+  discord.listenTo(/^bot, .*holidays?.*/, async (msg) => {
     if (msg.channel.name !== DISCORD_TRIVIA_CHANNEL) return false
 
     if (msg.author.bot) return false
@@ -47,11 +47,11 @@ module.exports = (discord, kanbanery, holiday) => {
 
     // keep variables undefined if try fails. let notifyHolidays use its default params
     try {
-      range = msg.content.match(/holidays.*(\d+)/)[1]
+      range = msg.content.match(/holidays?.*(\d+)/)[1]
     } catch (e) { /**/ }
 
     try {
-      unit = msg.content.match(/holidays.*(days?|weeks?|months?)/)[1]
+      unit = msg.content.match(/holidays?.*(days?|weeks?|months?)/)[1]
     } catch (e) { /**/ }
 
     notifyHolidays(range, unit)
@@ -79,9 +79,9 @@ module.exports = (discord, kanbanery, holiday) => {
     start: true,
     async onTick() {
       if (process.env.NODE_ENV !== "test") {
-        console.log("CronJob triggered: printing upcoming holidays for the next 2 weeks")
+        console.log("CronJob triggered: printing upcoming holidays for the next 4 weeks")
       }
-      notifyHolidays(2, "weeks", true)
+      notifyHolidays(4, "weeks", true)
     }
   })
 
