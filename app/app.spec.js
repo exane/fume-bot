@@ -181,7 +181,7 @@ describe("App", () => {
 
     expect(kanbanery_interface.fetch.calledOnce).to.be.true
 
-    await onTick()
+    await onTick.call({stop() {}})
 
     expect(kanbanery_interface.fetch.calledTwice).to.be.true
 

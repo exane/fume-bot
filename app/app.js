@@ -92,6 +92,7 @@ module.exports = (discord, kanbanery, holiday) => {
     start: true,
     runOnInit: true,
     async onTick() {
+      this.stop()
       if (process.env.NODE_ENV !== "test") {
         console.log("fetching...")
       }
