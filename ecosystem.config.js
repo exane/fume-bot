@@ -7,7 +7,7 @@ module.exports = {
     {
       name      : "Fume-bot",
       script    : "index.js",
-      exec_interpreter: "/home/exane/.nvm/versions/node/v8.11.1/bin/node",
+      exec_interpreter: "node@8",
       env_production : {
         NODE_ENV: "production"
       }
