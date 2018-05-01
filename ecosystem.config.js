@@ -7,7 +7,7 @@ module.exports = {
     {
       name      : "Fume-bot",
       script    : "index.js",
-      exec_interpreter: "node@8",
+      exec_interpreter: "node@8.11.1",
       env_production : {
         NODE_ENV: "production"
       }
