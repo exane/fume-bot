@@ -88,14 +88,10 @@ module.exports = (discord, kanbanery, holiday) => {
   // Run every 5 minutes
   new cron.CronJob({
     name: "flox kanbanery rss feed",
-    cronTime: "* */5 * * * *",
+    cronTime: "0 */5 * * * *",
     start: true,
     runOnInit: true,
-    onComplete() {
-      this.start()
-    },
     async onTick() {
-      this.stop()
       if (process.env.NODE_ENV !== "test") {
         console.log("fetching...")
       }

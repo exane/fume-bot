@@ -175,13 +175,13 @@ describe("App", () => {
     })
 
     const [{cronTime, start, runOnInit, onTick}] = job
-    expect(cronTime).to.eq("* */5 * * * *")
+    expect(cronTime).to.eq("0 */5 * * * *")
     expect(start).to.eq(true)
     expect(runOnInit).to.eq(true)
 
     expect(kanbanery_interface.fetch.calledOnce).to.be.true
 
-    await onTick.call({stop() {}})
+    await onTick()
 
     expect(kanbanery_interface.fetch.calledTwice).to.be.true
 
