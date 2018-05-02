@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 const kanbanery = require("./app/kanbanery_feed")
 const Discord = require("discord.js")
 const client = new Discord.Client()
