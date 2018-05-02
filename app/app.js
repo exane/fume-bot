@@ -13,8 +13,9 @@ module.exports = (discord, kanbanery, holiday) => {
   const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
   const DISCORD_TRIVIA_CHANNEL = process.env.DISCORD_TRIVIA_CHANNEL
 
-  const { KANBANERY_API_KEY, KANBANERY_HOST, KANBANERY_BOARD_URL, KANBANERY_SUMMARY_COLUMN_ID } = process.env
+  const { KANBANERY_API_KEY, KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, PROJECT_ID } = process.env
 
+  const KANBANERY_BOARD_URL = `https://${KANBANERY_HOST}/projects/${PROJECT_ID}`
   const URL = `${KANBANERY_BOARD_URL}/log/?key=${KANBANERY_API_KEY}`
 
   const notifyHolidays = async (range = 2, unit = "weeks", send_only_if_holidays_are_upcoming = false) => {
