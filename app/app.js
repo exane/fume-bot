@@ -91,6 +91,9 @@ module.exports = (discord, kanbanery, holiday) => {
     cronTime: "* */5 * * * *",
     start: true,
     runOnInit: true,
+    onComplete() {
+      this.start()
+    },
     async onTick() {
       this.stop()
       if (process.env.NODE_ENV !== "test") {
