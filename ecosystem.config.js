@@ -27,9 +27,9 @@ module.exports = {
       ref: "origin/master",
       repo: "https://github.com/exane/fume-bot.git",
       path: "/home/exane/fume-bot",
-      "post-deploy": "ln -s /home/exane/fume-bot/shared/env /home/exane/fume-bot/current/.env\
-                      && yarn --prod \
-                      && pm2 startOrRestart ecosystem.config.js --env production"
+      "post-deploy": "ln -s /home/exane/fume-bot/shared/env /home/exane/fume-bot/current/.env;\
+                      yarn --prod;\
+                      pm2 startOrRestart ecosystem.config.js --env production"
     }
   }
 }
