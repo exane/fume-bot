@@ -44,7 +44,7 @@ describe("App", () => {
   it("listens to holiday requests", () => {
     app(discord, kanbanery_interface, holiday_interface)
 
-    expect(discord.listenTo.calledOnce).to.be.true
+    expect(discord.listenTo.called).to.be.true
     expect(discord.listenTo.getCall(0).args[0].toString()).to.equal("/^bot, .*holidays?.*/")
     expect(discord.listenTo.getCall(0).args[1]).to.be.a("function")
   })

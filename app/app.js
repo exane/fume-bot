@@ -12,6 +12,7 @@ const send_kanbanery_feed = (discord, channel, feeds) => {
 module.exports = (discord, kanbanery, holiday) => {
   const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
   const DISCORD_TRIVIA_CHANNEL = process.env.DISCORD_TRIVIA_CHANNEL
+  const DISCORD_FUME_CHANNEL = process.env.DISCORD_FUME_CHANNEL
 
   const { KANBANERY_API_KEY, KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, PROJECT_ID } = process.env
 
@@ -57,6 +58,19 @@ module.exports = (discord, kanbanery, holiday) => {
     } catch (e) { /**/ }
 
     notifyHolidays(range, unit)
+  })
+
+  discord.listenTo(/^!help/, async (msg) => {
+    if (msg.channel.name !== DISCORD_FUME_CHANNEL) return false
+
+    discord.send(DISCORD_FUME_CHANNEL, `
+Fume-Bot interface
+  Holidays:
+    'bot, next holidays?'
+    'bot, holidays for the next 2 months'
+    'bot, holiday for the next year'
+    'bot, holidays in 2 days'
+`)
   })
 
   // Triggers on the first of every month
@@ -107,5 +121,4 @@ module.exports = (discord, kanbanery, holiday) => {
       }
     }
   })
-
 }
