@@ -92,6 +92,22 @@ describe("App", () => {
     expect(holiday_interface.next.getCall(0).args).to.include.members(["4", "months"])
   })
 
+  it("sends holiday reminder with another custom range and unit", async () => {
+    app(discord, kanbanery_interface, holiday_interface)
+
+    const trigger_holiday_request = discord.listenTo.getCall(0).args[1]
+
+    const msg_interface = {
+      channel: { name: "trivia" },
+      author: { bot: false },
+      content: "bot, give me the holidays for the next 12 months pls"
+    }
+    await trigger_holiday_request(msg_interface)
+
+    expect(holiday_interface.next.calledOnce).to.be.true
+    expect(holiday_interface.next.getCall(0).args).to.include.members(["12", "months"])
+  })
+
   it("does not send holiday reminder with bot as user", async () => {
     app(discord, kanbanery_interface, holiday_interface)
 

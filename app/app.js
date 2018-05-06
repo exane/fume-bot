@@ -50,7 +50,7 @@ module.exports = (discord, kanbanery, holiday) => {
 
     // keep variables undefined if try fails. let notifyHolidays use its default params
     try {
-      range = msg.content.match(/holidays?.*(\d+)/)[1]
+      range = msg.content.match(/holidays?[^\d]*(\d+)/)[1]
     } catch (e) { /**/ }
 
     try {
