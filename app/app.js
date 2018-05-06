@@ -31,9 +31,10 @@ module.exports = (discord, kanbanery, holiday) => {
       return `- ${date_formatted}: ${h.name}` + (h.hinweis != "" ? ` (${h.hinweis})` : "")
     }).join("\n")
 
+    const today = moment().format("DD.MM.YYYY")
     const message = upcoming.length ?
-      `Holiday reminder: \nFor the next ${range} ${unit} we've got:\n${upcoming_messages}` :
-      `Holiday reminder: \nFor the next ${range} ${unit} we've no upcoming holidays.`
+      `Holiday reminder for ${today}! \nFor the next ${range} ${unit} we've got:\n${upcoming_messages}` :
+      `Holiday reminder for ${today}! \nFor the next ${range} ${unit} we've got no upcoming holidays.`
 
     if (!upcoming.length && send_only_if_holidays_are_upcoming) return false
     discord.send(DISCORD_TRIVIA_CHANNEL, message)

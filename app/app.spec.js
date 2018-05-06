@@ -3,6 +3,7 @@ const app = require("./app")
 const sinon = require("sinon")
 const DiscordWrapper = require("./discord.js")
 const cron = require("cron")
+const tk = require("timekeeper")
 
 const holiday_interface = {
   async next() {},
@@ -49,6 +50,7 @@ describe("App", () => {
   })
 
   it("sends holiday reminder", async () => {
+    tk.travel(new Date("2017-09-23"))
     app(discord, kanbanery_interface, holiday_interface)
 
     expect(discord.send.calledOnce).to.be.false
@@ -68,8 +70,10 @@ describe("App", () => {
     expect(discord.send.calledOnce).to.be.true
     expect(discord.send.getCall(0).args).to.include.members([
       "trivia",
-      "Holiday reminder: \nFor the next 2 weeks we've got:\n- 03.10.2017 (Tuesday): Tag der Deutschen Einheit (hinweis)"
+      "Holiday reminder for 23.09.2017! \nFor the next 2 weeks we've got:\n- 03.10.2017 (Tuesday): Tag der Deutschen Einheit (hinweis)"
     ])
+
+    tk.reset()
   })
 
   it("sends holiday reminder with custom range and unit", async () => {
