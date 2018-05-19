@@ -82,7 +82,12 @@ const sassyComment = (channel) => {
   const being_sassy = (Math.random()*100 | 0) === 42
   if (being_sassy) {
     const random_emote = emotes[(Math.random() * emotes.length) | 0]
-    channel.send(client.emojis.find("name", random_emote).toString())
+    console.log("Sassy response: ", random_emote)
+    try {
+      channel.send(client.emojis.find("name", random_emote).toString())
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
