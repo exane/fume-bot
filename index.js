@@ -1,5 +1,9 @@
 require("dotenv").config()
 
+process.on("unhandledRejection", (reason, p) => {
+  console.error("Unhandled Rejection at:", p, "reason:", reason)
+})
+
 const kanbanery = require("./app/kanbanery_feed")
 const Discord = require("discord.js")
 const client = new Discord.Client()
