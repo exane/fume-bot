@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha ./**/*.spec.js",
+    "test": "cross-env NODE_ENV=test mocha ./**/*.spec.js",
+    "test:watch": "yarn run test --watch -R min",
     "pm2": "./node_modules/pm2/bin/pm2",
     "deploy:setup": "yarn run pm2 deploy ecosystem.config.js production setup",
     "deploy": "yarn run pm2 deploy ecosystem.config.js production",
@@ -19,12 +20,14 @@
     "dotenv": "^5.0.1",
     "html-entities": "^1.2.1",
     "moment": "^2.18.1",
+    "moment-timezone": "^0.5.23",
     "pm2": "^2.6.1",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "cross-env": "^5.2.0",
     "mocha": "^3.5.0",
     "sinon": "^3.2.1",
     "timekeeper": "^2.0.0"

@@ -13,11 +13,14 @@ module.exports = (discord, kanbanery, holiday) => {
   const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
   const DISCORD_TRIVIA_CHANNEL = process.env.DISCORD_TRIVIA_CHANNEL
   const DISCORD_FUME_CHANNEL = process.env.DISCORD_FUME_CHANNEL
+  const DISCORD_WEATHER_CHANNEL = process.env.DISCORD_WEATHER_CHANNEL
 
   const { KANBANERY_API_KEY, KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, PROJECT_ID } = process.env
+  const { WEATHER_API_KEY } = process.env
 
   const KANBANERY_BOARD_URL = `https://${KANBANERY_HOST}/projects/${PROJECT_ID}`
   const URL = `${KANBANERY_BOARD_URL}/log/?key=${KANBANERY_API_KEY}`
+  const weatherApi = new weatherApi(WEATHER_API_KEY)
 
   const notifyHolidays = async (range = 2, unit = "weeks", send_only_if_holidays_are_upcoming = false) => {
     const upcoming = await holiday.next(range, unit)
@@ -85,6 +88,28 @@ Fume-Bot interface
         console.log(summary)
       }
       discord.send(DISCORD_FLOX_CHANNEL, summary)
+    }
+  })
+
+  // Triggers every morning
+  new cron.CronJob({
+    name: "daily weather report",
+    cronTime: "00 06 * * * *",
+    start: true,
+    async onTick() {
+      try {
+        const report = await weatherApi.report()
+
+        if (process.env.NODE_ENV !== "test") {
+          console.log("CronJob triggered: printing weather report")
+          console.log(report)
+        }
+
+        discord.send(DISCORD_WEATHER_CHANNEL, report)
+      } catch (error) {
+        console.log("daily weather report: something went wrong")
+        console.log(error)
+      }
     }
   })
 

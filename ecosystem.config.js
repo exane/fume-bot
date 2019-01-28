@@ -3,12 +3,12 @@ module.exports = {
    * Application configuration section
    * http://pm2.keymetrics.io/docs/usage/application-declaration/
    */
-  apps : [
+  apps: [
     {
       name: "Fume-bot",
       script: "index.js",
       exec_interpreter: "node@8.11.1",
-      env_production : {
+      env_production: {
         NODE_ENV: "production"
       }
     },
