@@ -16,6 +16,7 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN
 const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
 const DISCORD_TRIVIA_CHANNEL = process.env.DISCORD_TRIVIA_CHANNEL
 const DISCORD_FUME_CHANNEL = process.env.DISCORD_FUME_CHANNEL
+const DISCORD_WEATHER_CHANNEL = process.env.DISCORD_WEATHER_CHANNEL
 
 // const { TRIVIA_TIME_LIMIT, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX } = process.env
 
@@ -29,6 +30,7 @@ console.log("RSS read interval: %d minutes (%d seconds)", FETCH_INTERVAL / 60 / 
 console.log("Using Kanbanery board: %s", URL)
 console.log("Using discord channel for kanbanery: %s", DISCORD_FLOX_CHANNEL)
 console.log("Using discord channel for trivia: %s", DISCORD_TRIVIA_CHANNEL)
+console.log("Using discord channel for weather: %s", DISCORD_WEATHER_CHANNEL)
 // console.log("Trivia time limit: %s minutes", TRIVIA_TIME_LIMIT / 60)
 // console.log("Trivia wait until next question: between %s minutes and %s minutes", TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN / 60, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX / 60)
 

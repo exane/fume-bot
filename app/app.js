@@ -1,5 +1,6 @@
 const cron = require("cron")
 const moment = require("moment")
+const WeatherApi = require("./weather")
 
 const send_kanbanery_feed = (discord, channel, feeds) => {
   feeds.forEach(feed => {
@@ -20,7 +21,7 @@ module.exports = (discord, kanbanery, holiday) => {
 
   const KANBANERY_BOARD_URL = `https://${KANBANERY_HOST}/projects/${PROJECT_ID}`
   const URL = `${KANBANERY_BOARD_URL}/log/?key=${KANBANERY_API_KEY}`
-  const weatherApi = new weatherApi(WEATHER_API_KEY)
+  const weatherApi = new WeatherApi(WEATHER_API_KEY)
 
   const notifyHolidays = async (range = 2, unit = "weeks", send_only_if_holidays_are_upcoming = false) => {
     const upcoming = await holiday.next(range, unit)
