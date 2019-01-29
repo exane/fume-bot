@@ -95,7 +95,7 @@ Fume-Bot interface
   // Triggers every morning
   new cron.CronJob({
     name: "daily weather report",
-    cronTime: "00 06 * * * *",
+    cronTime: "00 00 06 * * *",
     start: true,
     async onTick() {
       try {
