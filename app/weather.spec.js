@@ -3,6 +3,7 @@ const WeatherAPI = require("./weather")
 const fs = require("fs")
 const sinon = require("sinon")
 const request = require("request-promise-native")
+const moment = require("moment")
 
 describe.only("WeatherAPI", () => {
   const API_KEY = "xyz"
@@ -50,7 +51,7 @@ describe.only("WeatherAPI", () => {
     const reports = await weatherApi.report()
 
     expect(reports).to.be.eql(
-      `Daily weather forecast! (Monday, 28.01.2019)
+      `Daily weather forecast! (${moment().format("dddd, DD.MM.YYYY")})
 St. Wendel
 
 - Monday, January 28, 19:00: 0.89C° | Rain (light rain)
