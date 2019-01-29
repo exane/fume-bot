@@ -6,11 +6,11 @@ const cron = require("cron")
 const tk = require("timekeeper")
 
 const holiday_interface = {
-  async next() {},
+  async next() { },
 }
 const kanbanery_interface = {
-  async fetch() {},
-  async summary() {},
+  async fetch() { },
+  async summary() { },
 }
 
 describe("App", () => {
@@ -19,6 +19,7 @@ describe("App", () => {
 
   beforeEach(() => {
     process.env.DISCORD_TRIVIA_CHANNEL = "trivia"
+    process.env.WEATHER_API_KEY = "xyz"
     discord = new DiscordWrapper({})
     sandbox.stub(discord, "listenTo")
     sandbox.stub(discord, "send")
@@ -150,7 +151,7 @@ describe("App", () => {
       if (arg[0].name === "kanbanery monthly summary") return arg[0]
     })
 
-    const [{cronTime, start, onTick}] = kanbanery_summary_job
+    const [{ cronTime, start, onTick }] = kanbanery_summary_job
     expect(cronTime).to.eq("00 00 00 01 * *")
     expect(start).to.eq(true)
 
@@ -169,7 +170,7 @@ describe("App", () => {
       if (arg[0].name === "weekly holiday reminder") return arg[0]
     })
 
-    const [{cronTime, start, onTick}] = holiday_reminder_job
+    const [{ cronTime, start, onTick }] = holiday_reminder_job
     expect(cronTime).to.eq("00 00 00 * * 0")
     expect(start).to.eq(true)
 
@@ -194,7 +195,7 @@ describe("App", () => {
       if (arg[0].name === "flox kanbanery rss feed") return arg[0]
     })
 
-    const [{cronTime, start, runOnInit, onTick}] = job
+    const [{ cronTime, start, runOnInit, onTick }] = job
     expect(cronTime).to.eq("0 */5 * * * *")
     expect(start).to.eq(true)
     expect(runOnInit).to.eq(true)

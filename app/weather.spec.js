@@ -5,7 +5,7 @@ const sinon = require("sinon")
 const request = require("request-promise-native")
 const moment = require("moment")
 
-describe.only("WeatherAPI", () => {
+describe("WeatherAPI", () => {
   const API_KEY = "xyz"
   const sandbox = sinon.sandbox.create()
   const weather_st_wendel = fs.readFileSync("./fixtures/weather/st_wendel")

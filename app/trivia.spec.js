@@ -9,10 +9,10 @@ const opentdb_api_fixture_json = JSON.parse(opentdb_api_fixture)
 
 const discord_interface = {
   client: {
-    on() {},
+    on() { },
     channels: {
       find() {
-        return { send() { return new Promise(res => res())} }
+        return { send() { return new Promise(res => res()) } }
       }
     }
   },

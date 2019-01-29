@@ -1,4 +1,5 @@
 require("dotenv").config()
+const WeatherApi = require("./weather")
 
 process.on("unhandledRejection", (reason, p) => {
   console.error("Unhandled Rejection at:", p, "reason:", reason)
@@ -17,6 +18,9 @@ const DISCORD_FLOX_CHANNEL = process.env.DISCORD_FLOX_CHANNEL
 const DISCORD_TRIVIA_CHANNEL = process.env.DISCORD_TRIVIA_CHANNEL
 const DISCORD_FUME_CHANNEL = process.env.DISCORD_FUME_CHANNEL
 const DISCORD_WEATHER_CHANNEL = process.env.DISCORD_WEATHER_CHANNEL
+const { WEATHER_API_KEY } = process.env
+
+const weatherApi = new WeatherApi(WEATHER_API_KEY)
 
 // const { TRIVIA_TIME_LIMIT, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MIN, TRIVIA_TIME_UNTIL_NEXT_QUESTION_MAX } = process.env
 
@@ -51,6 +55,13 @@ client.on("message", async (msg) => {
     onFumeMessage(msg)
   }
 
+  if (msg.channel.name === DISCORD_WEATHER_CHANNEL || msg.author.bot === false) {
+    if (msg.content === "!test") {
+      const report = await weatherApi.report()
+      msg.channel.send(report)
+    }
+  }
+
   if (msg.channel.name !== DISCORD_FLOX_CHANNEL || msg.author.bot === true) return
   const content = msg.content
   console.log("Command recognized: %s", content)
@@ -81,7 +92,8 @@ const onFumeMessage = (msg) => {
 const sassyComment = (channel) => {
   const emotes = [
     "feelsGoodMan", "feelsBadMan", "timCreep", "NotLikeThis",
-    "feelsWtfMan", "LUL", "timW00t", "thinking"
+    "feelsWtfMan", "LUL", "timW00t", "thinking", "feelsHm", "feelsHolgerMan",
+    "feelsWeirdMan", "feelsReeMan", "feelsViktorMan", "aptexEZ"
   ]
 
   //should bot being sassy?
