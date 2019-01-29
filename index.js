@@ -1,5 +1,5 @@
 require("dotenv").config()
-const WeatherApi = require("./weather")
+const WeatherApi = require("./app/weather")
 
 process.on("unhandledRejection", (reason, p) => {
   console.error("Unhandled Rejection at:", p, "reason:", reason)
