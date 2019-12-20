@@ -24,7 +24,7 @@ jobs:
       env:
         CI: true
   deploy:
-    if: ${{ github.ref == "staging" }}
+    if: github.ref == "staging"
     needs: build
     runs-on: ubuntu-latest
     steps:
