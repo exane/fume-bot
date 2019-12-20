@@ -7,6 +7,7 @@
     "test": "cross-env NODE_ENV=test mocha ./**/*.spec.js",
     "test:watch": "yarn run test --watch -R min",
     "deploy:setup": "yarn run pm2 deploy ecosystem.config.js production setup",
+    "deploy:staging:setup": "yarn run pm2 deploy ecosystem.config.js staging setup",
     "deploy": "yarn run pm2 deploy ecosystem.config.js production",
     "deploy:staging": "yarn run pm2 deploy ecosystem.config.js staging",
     "start": "node index.js"
