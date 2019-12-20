@@ -27,7 +27,7 @@ module.exports = {
       ref: "origin/staging",
       repo: "https://github.com/exane/fume-bot.git",
       path: "/home/exane/fume-bot-staging",
-      "post-deploy": "yarn --prod"
+      "post-deploy": "yarn --prod; pm2 startOrRestart ecosystem.config.js --env production"
     },
     production: {
       user: "exane",
@@ -37,7 +37,7 @@ module.exports = {
       ref: "origin/master",
       repo: "https://github.com/exane/fume-bot.git",
       path: "/home/exane/fume-bot",
-      "post-deploy": "yarn --prod"
+      "post-deploy": "yarn --prod; pm2 startOrRestart ecosystem.config.js --env production"
     }
   }
 }
