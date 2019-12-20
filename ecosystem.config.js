@@ -5,7 +5,7 @@ module.exports = {
    */
   apps: [
     {
-      name: "Fume-bot",
+      name: "Fume-bot-staging",
       script: "index.js",
       exec_interpreter: "node@8.11.1",
       env_production: {
