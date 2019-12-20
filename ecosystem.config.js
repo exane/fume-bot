@@ -5,7 +5,7 @@ module.exports = {
    */
   apps: [
     {
-      name: "Fume-bot-staging",
+      name: "Fume-bot",
       script: "index.js",
       exec_interpreter: "node@8.11.1",
       env_production: {
@@ -19,16 +19,6 @@ module.exports = {
    * http://pm2.keymetrics.io/docs/usage/deployment/
    */
   deploy: {
-    staging: {
-      user: "exane",
-      host: [{
-        host: "exane.cf"
-      }],
-      ref: "origin/staging",
-      repo: "https://github.com/exane/fume-bot.git",
-      path: "/home/exane/fume-bot-staging",
-      "post-deploy": "yarn --prod; pm2 startOrRestart ecosystem.config.js --env production"
-    },
     production: {
       user: "exane",
       host: [{
@@ -37,7 +27,11 @@ module.exports = {
       ref: "origin/master",
       repo: "https://github.com/exane/fume-bot.git",
       path: "/home/exane/fume-bot",
-      "post-deploy": "yarn --prod; pm2 startOrRestart ecosystem.config.js --env production"
+      "post-deploy": "\
+        yarn --prod; \
+        pm2 startOrRestart ecosystem.config.js --env production > /dev/null;\
+        gpg2 --quiet --batch --yes --decrypt --passphrase-file ../shared/encryption_secret --output .env .env.live.gpg;\
+        "
     }
   }
 }

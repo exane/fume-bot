@@ -26,10 +26,10 @@ yarn test
 
 ## Deployment Changes
 
-* Encrypt .env.live with
+### One time setup
+* Put and Use encryption secret as defined in github > settings -> secrets
+* Also put the same key under shared deployment folder
 
-```sh
-gpg --symmetric --cipher-algo AES256 .env.live
 ```
-
-* Use encryption secret as defined in github > settings -> secrets
+make update_credentials
+```

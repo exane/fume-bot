@@ -1,10 +1,9 @@
 #!/bin/bash
 
-gpg --quiet --batch --yes --decrypt --passphrase="$ENCRYPTION_SECRET" --output env .env.live.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$ENCRYPTION_SECRET" --output $HOME/deploy_rsa deploy_rsa.gpg
 
-gpg --quiet --batch --yes --decrypt --passphrase="$ENCRYPTION_SECRET" --output deploy_rsa deploy_rsa.gpg
-
-mv deploy_rsa $HOME/.ssh/.deploy_rsa
-eval "$(ssh-agent -s)"
-chmod 600 $HOME/.ssh/deploy_rsa
-ssh-add $HOME/.ssh/deploy_rsa
+mkdir -p $HOME/.ssh
+echo -e "Host *\n\tStrictHostKeyChecking no\n" >> $HOME/.ssh/config
+chmod 600 $HOME/deploy_rsa
+ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+ssh-add $HOME/deploy_rsa > /dev/null
