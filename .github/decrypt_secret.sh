@@ -1,5 +1,10 @@
 #!/bin/bash
-mkdir $HOME/secrets
-# --batch to prevent interactive command --yes to assume "yes" for questions
-gpg --quiet --batch --yes --decrypt --passphrase="$ENCRYPTION_SECRET" \
---output $HOME/secrets/.env.live .env.live.gpg
+
+gpg --quiet --batch --yes --decrypt --passphrase="$ENCRYPTION_SECRET" --output env .env.live.gpg
+
+gpg --quiet --batch --yes --decrypt --passphrase="$ENCRYPTION_SECRET" --output deploy_rsa deploy_rsa.gpg
+
+mv deploy_rsa $HOME/.ssh/.deploy_rsa
+eval "$(ssh-agent -s)"
+chmod 600 $HOME/.ssh/deploy_rsa
+ssh-add $HOME/.ssh/deploy_rsa

@@ -23,3 +23,13 @@ jobs:
         yarn test
       env:
         CI: true
+  deploy:
+    if: ${{ github.ref == "staging" }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: decrypt credentials
+      run: ./.github/decrypt_secret.sh
+    - name: deploy
+      run: |
+        yarn run deploy:staging
