@@ -29,8 +29,8 @@ module.exports = {
       path: "/home/exane/fume-bot",
       "post-deploy": "\
         yarn --prod; \
-        pm2 startOrRestart ecosystem.config.js --env production > /dev/null;\
         gpg2 --quiet --batch --yes --decrypt --passphrase-file ../shared/encryption_secret --output .env .env.live.gpg;\
+        pm2 startOrRestart ecosystem.config.js --env production > /dev/null;\
         "
     }
   }
