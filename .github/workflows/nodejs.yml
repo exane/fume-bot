@@ -24,7 +24,7 @@ jobs:
       env:
         CI: true
     - name: deploy
-      if: github.ref == 'master'
+      if: github.ref == 'refs/heads/master'
       run: |
         chmod +x ./.github/decrypt_secret.sh
         ./.github/decrypt_secret.sh
