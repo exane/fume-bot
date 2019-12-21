@@ -2,3 +2,7 @@
 node_modules
 package-lock.json
 yarn-error.log
+.env.live
+encryption_secret
+deploy_rsa
+deploy_rsa.pub
