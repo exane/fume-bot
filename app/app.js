@@ -14,7 +14,7 @@ const send_kanbanery_feed = (discord, channel, feeds) => {
 const gitHubHooksFlox = (discord, channel, secret) => {
   GitHubHooks.register("/hooks/flox", secret, (event, payload) => {
     if (event == "issues" && payload.action == "opened") {
-      discord.send(channel, payload.issue.url)
+      discord.send(channel, payload.issue.html_url)
     }
   })
 }
