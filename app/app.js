@@ -1,12 +1,21 @@
 const cron = require("cron")
 const moment = require("moment")
 const WeatherApi = require("./weather")
+const GitHubHooks = require("./github")
 
 const send_kanbanery_feed = (discord, channel, feeds) => {
   feeds.forEach(feed => {
     // using "<" and ">" around a link to disabled embedding
     const msg = `:triangular_flag_on_post: **${feed.title}**\n${feed.description}\n:point_right: <${feed.task}>\n---------------------------------------------------------------------------`
     discord.send(channel, msg)
+  })
+}
+
+const gitHubHooksFlox = (discord, channel, secret) => {
+  GitHubHooks.register("/hooks/flox", secret, (event, payload) => {
+    if (event == "issues" && payload.action == "opened") {
+      discord.send(channel, payload.issue.url)
+    }
   })
 }
 
@@ -18,10 +27,14 @@ module.exports = (discord, kanbanery, holiday) => {
 
   const { KANBANERY_API_KEY, KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, PROJECT_ID } = process.env
   const { WEATHER_API_KEY } = process.env
+  const { GITHUB_HOOK_PORT, GITHUB_HOOK_SECRET_FLOX } = process.env
 
   const KANBANERY_BOARD_URL = `https://${KANBANERY_HOST}/projects/${PROJECT_ID}`
   const URL = `${KANBANERY_BOARD_URL}/log/?key=${KANBANERY_API_KEY}`
   const weatherApi = new WeatherApi(WEATHER_API_KEY)
+
+  GitHubHooks.init().listen(GITHUB_HOOK_PORT)
+  gitHubHooksFlox(discord, DISCORD_FLOX_CHANNEL, GITHUB_HOOK_SECRET_FLOX)
 
   const notifyHolidays = async (range = 2, unit = "weeks", send_only_if_holidays_are_upcoming = false) => {
     const upcoming = await holiday.next(range, unit)
