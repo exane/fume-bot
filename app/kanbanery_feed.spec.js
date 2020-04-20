@@ -7,6 +7,7 @@ const tk = require("timekeeper")
 
 const URL_WITH_NO_ACTIVITIES = "URL_WITH_NO_ACTIVITIES"
 const URL_WITH_ACTIVITIES = "URL_WITH_ACTIVITIES"
+const URL_BAD_CODE = "URL_BAD_CODE"
 
 describe("kanbanery_feed", () => {
 
@@ -18,6 +19,9 @@ describe("kanbanery_feed", () => {
       request_get_stub = sinon.stub(request, "get")
       request_get_stub.withArgs(URL_WITH_ACTIVITIES).returns(fs.readFileSync("./fixtures/kanbanery/new_activity"))
       request_get_stub.withArgs(URL_WITH_NO_ACTIVITIES).returns(fs.readFileSync("./fixtures/kanbanery/no_new_activity"))
+      request_get_stub.withArgs(URL_BAD_CODE).returns(async () => new Promise((_resolve, reject) => {
+        return reject({ statusCode: 400 })
+      }))
     })
 
     after(() => {
@@ -55,6 +59,16 @@ describe("kanbanery_feed", () => {
     it("should ignore entries from previous dates", async () => {
       const result = await kanbanery.fetch(URL_WITH_NO_ACTIVITIES)
       expect(result).to.have.length(0)
+    })
+
+    it("handles error codes gracefully", async () => {
+      try {
+        const result = await kanbanery.fetch(URL_BAD_CODE)
+        expect(result).to.eql([])
+      }
+      catch (err) {
+        expect(true, "test expected kanbanery#fetch to fail gracefully").to.be.false
+      }
     })
 
   })

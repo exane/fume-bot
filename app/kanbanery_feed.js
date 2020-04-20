@@ -22,13 +22,29 @@ const onlyNewFeed = (feed = []) => {
     const in_cache = store.cache.some(c => c.title === f.title && c.time === f.time && c.description === f.description)
 
     if (in_cache) return false
+
     return f
   }).filter(f => f && f.date === date())
 }
 
+const loadContent = async (url) => {
+  try {
+    const result = await request.get(url)
+    return [true, result]
+  } catch (err) {
+    return [false, err]
+  }
+}
+
 const fetch = async (url) => {
-  const req = await request.get(url)
-  const $ = cheerio.load(req)
+  const [status, result] = await loadContent(url)
+  if (!status) {
+    if (process.env.NODE_ENV !== "test") {
+      console.error("fetch: %o", result)
+    }
+    return [];
+  }
+  const $ = cheerio.load(result)
   const feed = $("#project-history > dd.loaded")
   const feed_date = $("#project-history dt:first-child a").text()
   const json_feed = onlyNewFeed(feed2json($, feed))
