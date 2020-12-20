@@ -143,7 +143,7 @@ describe("App", () => {
     expect(discord.send.calledOnce).to.be.false
   })
 
-  it("uses a cronjob to print a monthly kanbanery summary", async () => {
+  xit("uses a cronjob to print a monthly kanbanery summary", async () => {
     sandbox.spy(cron, "CronJob")
     app(discord, kanbanery_interface, holiday_interface)
 
@@ -162,7 +162,7 @@ describe("App", () => {
     expect(discord.send.calledOnce).to.be.true
   })
 
-  it("uses a cronjob to print a weekly holiday reminder", async () => {
+  xit("uses a cronjob to print a weekly holiday reminder", async () => {
     sandbox.spy(cron, "CronJob")
     app(discord, kanbanery_interface, holiday_interface)
 
@@ -181,7 +181,7 @@ describe("App", () => {
     expect(discord.send.calledOnce).to.be.true
   })
 
-  it("uses a cronjob to print a rss feed of flox kanbanery board every 5 minutes", async () => {
+  xit("uses a cronjob to print a rss feed of flox kanbanery board every 5 minutes", async () => {
     sandbox.spy(cron, "CronJob")
     kanbanery_interface.fetch.restore()
     sandbox.stub(kanbanery_interface, "fetch").returns(new Promise(res => res([{
