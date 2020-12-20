@@ -4,7 +4,7 @@ update_credentials: encryption_secret .env.live deploy_rsa
 
 encryption_secret:
 	@cp encryption_secret.example encryption_secret
-	@echo "'encryption_secret' created. Please update the phassphrase."
+	@echo "'encryption_secret' created. Please update the passphrase."
 
 .env.live:
 	@cp .env.example .env.live

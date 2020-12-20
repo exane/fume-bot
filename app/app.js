@@ -33,8 +33,8 @@ module.exports = (discord, kanbanery, holiday) => {
   const URL = `${KANBANERY_BOARD_URL}/log/?key=${KANBANERY_API_KEY}`
   const weatherApi = new WeatherApi(WEATHER_API_KEY)
 
-  GitHubHooks.init().listen(GITHUB_HOOK_PORT)
-  gitHubHooksFlox(discord, DISCORD_FLOX_CHANNEL, GITHUB_HOOK_SECRET_FLOX)
+  // GitHubHooks.init().listen(GITHUB_HOOK_PORT)
+  // gitHubHooksFlox(discord, DISCORD_FLOX_CHANNEL, GITHUB_HOOK_SECRET_FLOX)
 
   const notifyHolidays = async (range = 2, unit = "weeks", send_only_if_holidays_are_upcoming = false) => {
     const upcoming = await holiday.next(range, unit)
@@ -91,73 +91,73 @@ Fume-Bot interface
   })
 
   // Triggers on the first of every month
-  new cron.CronJob({
-    name: "kanbanery monthly summary",
-    cronTime: "00 00 00 01 * *",
-    start: true,
-    async onTick() {
-      const summary = await kanbanery.summary(KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, KANBANERY_API_KEY)
-      if (process.env.NODE_ENV !== "test") {
-        console.log("CronJob triggered: printing kanbanery summary")
-        console.log(summary)
-      }
-      discord.send(DISCORD_FLOX_CHANNEL, summary)
-    }
-  })
+  // new cron.CronJob({
+  //   name: "kanbanery monthly summary",
+  //   cronTime: "00 00 00 01 * *",
+  //   start: true,
+  //   async onTick() {
+  //     const summary = await kanbanery.summary(KANBANERY_HOST, KANBANERY_SUMMARY_COLUMN_ID, KANBANERY_API_KEY)
+  //     if (process.env.NODE_ENV !== "test") {
+  //       console.log("CronJob triggered: printing kanbanery summary")
+  //       console.log(summary)
+  //     }
+  //     discord.send(DISCORD_FLOX_CHANNEL, summary)
+  //   }
+  // })
 
   // Triggers every morning
-  new cron.CronJob({
-    name: "daily weather report",
-    cronTime: "00 00 06 * * *",
-    start: true,
-    async onTick() {
-      try {
-        const report = await weatherApi.report()
+  // new cron.CronJob({
+  //   name: "daily weather report",
+  //   cronTime: "00 00 06 * * *",
+  //   start: true,
+  //   async onTick() {
+  //     try {
+  //       const report = await weatherApi.report()
 
-        if (process.env.NODE_ENV !== "test") {
-          console.log("CronJob triggered: printing weather report")
-          console.log(report)
-        }
+  //       if (process.env.NODE_ENV !== "test") {
+  //         console.log("CronJob triggered: printing weather report")
+  //         console.log(report)
+  //       }
 
-        discord.send(DISCORD_WEATHER_CHANNEL, report)
-      } catch (error) {
-        console.log("daily weather report: something went wrong")
-        console.log(error)
-      }
-    }
-  })
+  //       discord.send(DISCORD_WEATHER_CHANNEL, report)
+  //     } catch (error) {
+  //       console.log("daily weather report: something went wrong")
+  //       console.log(error)
+  //     }
+  //   }
+  // })
 
   // Triggers on every sunday
-  new cron.CronJob({
-    name: "weekly holiday reminder",
-    cronTime: "00 00 00 * * 0",
-    start: true,
-    async onTick() {
-      if (process.env.NODE_ENV !== "test") {
-        console.log("CronJob triggered: printing upcoming holidays for the next 4 weeks")
-      }
-      notifyHolidays(4, "weeks", true)
-    }
-  })
+  // new cron.CronJob({
+  //   name: "weekly holiday reminder",
+  //   cronTime: "00 00 00 * * 0",
+  //   start: true,
+  //   async onTick() {
+  //     if (process.env.NODE_ENV !== "test") {
+  //       console.log("CronJob triggered: printing upcoming holidays for the next 4 weeks")
+  //     }
+  //     notifyHolidays(4, "weeks", true)
+  //   }
+  // })
 
   // Run every 5 minutes
-  new cron.CronJob({
-    name: "flox kanbanery rss feed",
-    cronTime: "0 */5 * * * *",
-    start: true,
-    runOnInit: true,
-    async onTick() {
-      if (process.env.NODE_ENV !== "test") {
-        console.log("fetching...")
-      }
-      try {
-        send_kanbanery_feed(discord, DISCORD_FLOX_CHANNEL, await kanbanery.fetch(URL))
-      } catch (e) {
-        console.error("Fetching failed. Reason: ", e)
-      }
-      if (process.env.NODE_ENV !== "test") {
-        console.log("Fetching done.")
-      }
-    }
-  })
+  // new cron.CronJob({
+  //   name: "flox kanbanery rss feed",
+  //   cronTime: "0 */5 * * * *",
+  //   start: true,
+  //   runOnInit: true,
+  //   async onTick() {
+  //     if (process.env.NODE_ENV !== "test") {
+  //       console.log("fetching...")
+  //     }
+  //     try {
+  //       send_kanbanery_feed(discord, DISCORD_FLOX_CHANNEL, await kanbanery.fetch(URL))
+  //     } catch (e) {
+  //       console.error("Fetching failed. Reason: ", e)
+  //     }
+  //     if (process.env.NODE_ENV !== "test") {
+  //       console.log("Fetching done.")
+  //     }
+  //   }
+  // })
 }
